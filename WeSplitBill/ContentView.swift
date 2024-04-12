@@ -22,6 +22,7 @@ struct ContentView: View {
                 Section {
                     TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                         .keyboardType(.decimalPad)
+                        .accessibilityIdentifier("amoutTextFiled")
                     
                     // 0th row conatins 2 people, 1st row contains 3 people and 2nd row contains 4 people and we have a selection marked as 2 so we by default it is a 2nd row which has 4 people
                     Picker("Number of people", selection: $numberOfPeople) {
@@ -39,18 +40,21 @@ struct ContentView: View {
                         }
                     }
                     .pickerStyle(.segmented)
+                    .accessibilityIdentifier("tipPercent")
                 } header: {
                     Text("How much tip do you want to tip")
                 }
                 
                 Section {
                     Text(totalPerPerson, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                        .accessibilityIdentifier("finalAmt")
                 }
                 
                 Button {
                     totalPerPerson = try! finalAmount.calculateFinalAmount(amount: checkAmount, tipPercent: tipPercentage, totalPerson: numberOfPeople+2)
                 } label: {
                     Text("calculate")
+                        .accessibilityIdentifier("calculateButton")
                 }
             }
             .navigationTitle("We Split")
